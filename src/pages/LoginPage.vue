@@ -31,7 +31,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import axios from "axios";
-import SidebarMenu from "../components/sidebars/SidebarMenu.vue";
+import SidebarMenu from "@/components/sidebars/SidebarMenu.vue";
 import { log } from "console";
 
 export default defineComponent({
