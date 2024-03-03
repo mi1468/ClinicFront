@@ -33,6 +33,7 @@ import { defineComponent } from "vue";
 import axios from "axios";
 import SidebarMenu from "@/components/sidebars/SidebarMenu.vue";
 import { log } from "console";
+import { API_URL, checkTokenAndRedirectLogin } from "@/auth";
 
 export default defineComponent({
   name: "LoginPage",
@@ -48,7 +49,7 @@ export default defineComponent({
   methods: {
     async login() {
       try {
-        const response = await axios.post("http://localhost:8000/login", {
+        const response = await axios.post(API_URL + "/login", {
           email: this.email,
           password: this.password,
         });
@@ -59,11 +60,15 @@ export default defineComponent({
         localStorage.setItem("token", token);
         // Redirect or do something else after successful login
         // Example: this.$router.push('/dashboard');
+        this.$router.push("/dashboard");
       } catch (error) {
         console.error("Login failed:", error);
         // Handle login error
       }
     },
+  },
+  mounted() {
+    checkTokenAndRedirectLogin();
   },
 });
 </script>

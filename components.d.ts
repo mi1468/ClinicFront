@@ -7,7 +7,6 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    copy: typeof import('./src/components/sidebars/PCSidebar copy.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     MobileSidebar: typeof import('./src/components/sidebars/MobileSidebar.vue')['default']
     PCSidebar: typeof import('./src/components/sidebars/PCSidebar.vue')['default']

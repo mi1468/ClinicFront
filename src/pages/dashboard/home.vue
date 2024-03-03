@@ -2,7 +2,7 @@
 <template>
   <div>
     <div style="height: 50px">
-      <h4 style="text-align: center; margin-top: 10px">Login</h4>
+      <h4 style="text-align: center; margin-top: 10px">Dashboard</h4>
     </div>
     <v-row no-gutters>
       <v-col-18>
@@ -11,11 +11,7 @@
       <v-col>
         <v-img src="@/assets/dashboard.jpg" style="object-fit: unset" />
 
-        <v-container>
-           
-          
-          
-        </v-container>
+        <v-container> </v-container>
       </v-col>
     </v-row>
   </div>
@@ -25,6 +21,7 @@
 import { defineComponent } from "vue";
 import axios from "axios";
 import SidebarMenu from "@/components/sidebars/SidebarMenu.vue";
+import { checkTokenAndRedirectDashboard } from "@/auth";
 import { log } from "console";
 
 export default defineComponent({
@@ -57,6 +54,9 @@ export default defineComponent({
         // Handle login error
       }
     },
+  },
+  mounted() {
+    checkTokenAndRedirectDashboard();
   },
 });
 </script>
