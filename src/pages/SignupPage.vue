@@ -63,6 +63,7 @@ import { defineComponent } from "vue";
 import axios from "axios";
 import SidebarMenu from "@/components/sidebars/SidebarMenu.vue";
 import { log } from "console";
+ import { baseUrl } from '@/config.js';
 
 export default defineComponent({
   name: "LoginPage",
@@ -85,7 +86,7 @@ export default defineComponent({
   methods: {
     async signup() {
       try {
-        const response = await axios.post("http://localhost:8000/signup", {
+        const response = await axios.post(baseUrl + "signup", {
           username: this.email,
           caseNumber: this.caseNumber,
           birthday: "1990-01-01",

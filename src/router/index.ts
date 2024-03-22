@@ -19,6 +19,7 @@ import IntroPage from "../pages/Intro.vue";
 import LoginPage from "../pages/LoginPage.vue";
 import SignupPage from "../pages/SignupPage.vue";
 import DashboardPage from "../pages/dashboard/home.vue";
+import ReceptionFormPage from "../pages/dashboard/reception/receptionForm.vue";
 import helloWorld from "../components/HelloWorld.vue";
 
 const routes = [
@@ -46,6 +47,11 @@ const routes = [
     path: "/dashboard",
     name: "Dashboard",
     component: DashboardPage,
+  },
+  {
+    path: "/dashboard/reception",
+    name: "receptionForm",
+    component: ReceptionFormPage,
   },
 ];
 

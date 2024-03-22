@@ -1,17 +1,46 @@
-<!-- LoginPage.vue -->
-<template>
+ <template>
   <div>
     <div style="height: 50px">
       <h4 style="text-align: center; margin-top: 10px">Dashboard</h4>
     </div>
     <v-row no-gutters>
-      <v-col-18>
+      <v-col-2>
         <SidebarMenu />
-      </v-col-18>
+      </v-col-2>
       <v-col>
-        <v-img src="@/assets/dashboard.jpg" style="object-fit: unset" />
+        <v-img
+          src="@/assets/dashboard.jpg"
+          height="450"
+          aspect-ratio="16/9"
+          cover
+        />
 
-        <v-container> </v-container>
+        <div>
+          <router-link to="dashboard/reception">
+            <v-card
+              :variant="variant"
+              class=""
+              max-width="344"
+              style="margin: 1em; padding: 1em"
+              elevation="10"
+            >
+              <v-card-item>
+                <div>
+                  <div class="text-overline mb-1">
+                    {{ variant }}
+                  </div>
+                  <v-img
+                    src="@/assets/menu/buttons/templateform.svg"
+                    style="height: 8em"
+                  />
+                  <div class="text-h5" style="text-align: center; margin: 1em">
+                    Patientenaufnahme
+                  </div>
+                </div>
+              </v-card-item>
+            </v-card>
+          </router-link>
+        </div>
       </v-col>
     </v-row>
   </div>

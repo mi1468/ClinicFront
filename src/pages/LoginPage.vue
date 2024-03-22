@@ -33,7 +33,8 @@ import { defineComponent } from "vue";
 import axios from "axios";
 import SidebarMenu from "@/components/sidebars/SidebarMenu.vue";
 import { log } from "console";
-import { API_URL, checkTokenAndRedirectLogin } from "@/auth";
+import { checkTokenAndRedirectLogin } from "@/auth";
+import { baseUrl } from "@/config.js";
 
 export default defineComponent({
   name: "LoginPage",
@@ -49,7 +50,7 @@ export default defineComponent({
   methods: {
     async login() {
       try {
-        const response = await axios.post(API_URL + "/login", {
+        const response = await axios.post(baseUrl + "login", {
           email: this.email,
           password: this.password,
         });
