@@ -22,21 +22,15 @@
               <h2 v-if="question.title" style="margin-top: 2em">
                 {{ question.title }}
               </h2>
-              <!-- <p>{{ question.question_text }}</p> -->
+           
               <!-- Additional rendering based on question type -->
               <template v-if="question.type === 'text'">
-                <!-- Render text input -->
-                <!-- <input
-                  type="text"
-                  v-model="formData[question.id]"
-                  :required="question.required"
-                  
-                /> -->
+               
                 <v-text-field
                   style="margin-top: 1em; margin-bottom: 1em; background: white"
                   v-model="formData[question.id]"
                   :required="question.required"
-                  :rules="rules"
+                  :rules="getValidationRules(question)"
                   hide-details="auto"
                   :label="question.question_text"
                 ></v-text-field>
@@ -96,12 +90,22 @@ export default defineComponent({
     return {
       page: 1,
       maxPage: 11,
+      rules: [
+                value => !!value || 'Required.'
+              ],
 
       questions: [] as Question[], // Initialize as an empty array of Question objects
       formData: {} as FormData, // Initialize as an empty object with FormData type
     };
   },
   methods: {
+    getValidationRules(question: Question) {
+      const rules = [];
+      if (question.required) {
+        rules.push((value: string) => !!value || 'This field is required');
+      }
+      return rules;
+    },
     async fetchTemplatePages() {
       const self = this;
       try {
@@ -152,6 +156,15 @@ export default defineComponent({
         });
     },
   },
+
+  computed: {
+    requiredRule() {
+      return [
+        value => !!value || 'This field is required' // Custom validation rule
+      ];
+    }
+  },
+
   created() {
     checkTokenAndRedirectDashboard();
     this.fetchTemplatePages();
