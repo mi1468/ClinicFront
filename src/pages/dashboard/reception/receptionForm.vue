@@ -1,4 +1,4 @@
- <template>
+<template>
   <div>
     <div style="height: 50px">
       <h4 style="text-align: center; margin-top: 10px">Patientenaufnahme</h4>
@@ -75,7 +75,17 @@ import axios from "axios";
 import SidebarMenu from "@/components/sidebars/SidebarMenu.vue";
 import { checkTokenAndRedirectDashboard } from "@/auth";
 import { log } from "console";
-import { baseUrl } from '@/config.js';
+import { baseUrl } from "@/config.js";
+import { ref } from "vue";
+
+interface Question {
+  id: number;
+  answer: string;
+}
+
+interface FormData {
+  [key: string]: string; // Assuming all answers are strings
+}
 
 export default defineComponent({
   name: "LoginPage",
@@ -87,28 +97,38 @@ export default defineComponent({
       page: 1,
       maxPage: 11,
 
-      questions: [], // Array to hold questions
-      formData: {}, // Object to hold form data
+      questions: [] as Question[], // Initialize as an empty array of Question objects
+      formData: {} as FormData, // Initialize as an empty object with FormData type
     };
   },
   methods: {
-    fetchTemplatePages() {
-      // Assuming you have a token stored in localStorage
-      const token = localStorage.getItem("token");
-      const config = {
-        headers: {
-          Authorization: `token ${token}`,
-        },
-      };
-      axios
-        .get(baseUrl +"templatequestions", config)
-        .then((response) => {
-          this.questions = response.data.questions;
-          console.log(this.questions);
-        })
-        .catch((error) => {
-          console.error("Error fetching template pages:", error);
+    async fetchTemplatePages() {
+      const self = this;
+      try {
+        const token = localStorage.getItem("token");
+        const config = {
+          headers: {
+            Authorization: `token ${token}`,
+          },
+        };
+        const response = await axios.get(baseUrl + "templatequestions", config);
+        this.questions = response.data.questions;
+        console.log(this.questions);
+
+        // Populate formData with answer values
+        this.questions.forEach((question) => {
+          this.formData[question.id.toString()] = question.answer;
+          if (question.type === "bool") {
+            // Convert answer to boolean
+            self.formData[question.id.toString()] = question.answer === "True";
+          } else {
+            // For other types, directly assign the answer
+            this.formData[question.id.toString()] = question.answer;
+          }
         });
+      } catch (error) {
+        console.error("Error fetching template pages:", error);
+      }
     },
     submitForm() {
       // Logic to submit the form data
